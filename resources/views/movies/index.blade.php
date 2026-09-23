@@ -1,121 +1,119 @@
 @extends('layouts.app')
 
-@section('title', 'All Movies')
+@section('title', 'Movie App')
 
 @section('content')
 
-<h2>Movie List</h2>
+<h2>Movie App</h2>
 
-<p>
-    @if($genre !== '' && $author !== '')
-        Showing movies with
-        Genre: <strong>{{ $genre }}</strong>
-        and
-        Author: <strong>{{ $author }}</strong>
+<div class="card mt-3">
 
-    @elseif($genre !== '')
-        Showing movies with
-        Genre: <strong>{{ $genre }}</strong>
+    <div class="card-body">
 
-    @elseif($author !== '')
-        Showing movies with
-        Author: <strong>{{ $author }}</strong>
+        <h3>Movies</h3>
 
-    @else
-        Showing all movies
-    @endif
-</p>
+        <p>
+            @if($genre !== '' && $author !== '')
 
-{{-- Genre Filter --}}
-<p>
-    <strong>Genre:</strong>
+                Genre: <strong>{{ $genre }}</strong>
+                |
+                Author: <strong>{{ $author }}</strong>
 
-    <a href="{{ route('movies.index', ['genre' => 'Sci-Fi', 'author' => $author]) }}">
-        Sci-Fi
-    </a>
+            @elseif($genre !== '')
 
-    |
+                Genre: <strong>{{ $genre }}</strong>
 
-    <a href="{{ route('movies.index', ['genre' => 'Action', 'author' => $author]) }}">
-        Action
-    </a>
+            @elseif($author !== '')
 
-    |
+                Author: <strong>{{ $author }}</strong>
 
-    <a href="{{ route('movies.index', ['genre' => 'Crime', 'author' => $author]) }}">
-        Crime
-    </a>
-</p>
+            @else
 
-{{-- Author Filter --}}
-<p>
-    <strong>Author:</strong>
+                Showing all movies
 
-    <a href="{{ route('movies.index', ['author' => 'Christopher Nolan', 'genre' => $genre]) }}">
-        Christopher Nolan
-    </a>
+            @endif
+        </p>
 
-    |
+        <h5>Filter by Genre</h5>
 
-    <a href="{{ route('movies.index', ['author' => 'The Wachowskis', 'genre' => $genre]) }}">
-        The Wachowskis
-    </a>
+        <a href="{{ route('movies.index', ['genre' => 'Sci-Fi', 'author' => $author]) }}">
+            Sci-Fi
+        </a>
 
-    |
+        |
 
-    <a href="{{ route('movies.index', ['author' => 'Francis Ford Coppola', 'genre' => $genre]) }}">
-        Francis Ford Coppola
-    </a>
+        <a href="{{ route('movies.index', ['genre' => 'Action', 'author' => $author]) }}">
+            Action
+        </a>
 
-    |
+        |
 
-    <a href="{{ route('movies.index', ['author' => 'Anthony Russo and Joe Russo', 'genre' => $genre]) }}">
-        Anthony Russo and Joe Russo
-    </a>
-</p>
+        <a href="{{ route('movies.index', ['genre' => 'Crime', 'author' => $author]) }}">
+            Crime
+        </a>
 
-{{-- Clear All --}}
-<p>
-    <a href="{{ route('movies.index') }}">
-        Clear All Filters
-    </a>
-</p>
+        <h5 class="mt-3">Filter by Author</h5>
 
-<table class="table table-bordered table-striped">
+        <a href="{{ route('movies.index', ['author' => 'Christopher Nolan', 'genre' => $genre]) }}">
+            Christopher Nolan
+        </a>
 
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Author</th>
-            <th>Year</th>
-            <th>Action</th>
-        </tr>
-    </thead>
+        |
 
-    <tbody>
+        <a href="{{ route('movies.index', ['author' => 'The Wachowskis', 'genre' => $genre]) }}">
+            The Wachowskis
+        </a>
 
-        @foreach($movies as $movie)
+        |
 
-        <tr>
-            <td>{{ $movie['id'] }}</td>
-            <td>{{ $movie['title'] }}</td>
-            <td>{{ $movie['genre'] }}</td>
-            <td>{{ $movie['author'] }}</td>
-            <td>{{ $movie['year'] }}</td>
+        <a href="{{ route('movies.index', ['author' => 'Francis Ford Coppola', 'genre' => $genre]) }}">
+            Francis Ford Coppola
+        </a>
 
-            <td>
-                <a href="{{ route('movies.show', ['id' => $movie['id']]) }}">
-                    View
-                </a>
-            </td>
-        </tr>
+        |
 
-        @endforeach
+        <a href="{{ route('movies.index', ['author' => 'Anthony Russo and Joe Russo', 'genre' => $genre]) }}">
+            Anthony Russo and Joe Russo
+        </a>
 
-    </tbody>
+        <br><br>
 
-</table>
+        <a href="{{ route('movies.index') }}">
+            Clear All Filters
+        </a>
+
+        <table class="table table-bordered mt-3">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year Published</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach($movies as $movie)
+
+                <tr>
+                    <td>{{ $movie['id'] }}</td>
+                    <td>{{ $movie['title'] }}</td>
+                    <td>{{ $movie['author'] }}</td>
+                    <td>{{ $movie['year'] }}</td>
+                    <td>{{ $movie['genre'] }}</td>
+                </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 @endsection

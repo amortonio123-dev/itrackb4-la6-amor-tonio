@@ -1,45 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Book Details')
+@section('title', $movie['title'])
 
 @section('content')
 
-<div class="card shadow-sm">
+<h2>Movie App</h2>
+
+<div class="card mt-3" style="max-width: 500px;">
 
     <div class="card-body">
 
-        <h2>{{ $book['title'] }}</h2>
-
-        <hr>
+        <h3 class="mb-4">{{ $movie['title'] }}</h3>
 
         <p>
             <strong>Author:</strong>
-            {{ $book['author'] }}
+            {{ $movie['author'] }}
         </p>
 
         <p>
             <strong>Year Published:</strong>
-            {{ $book['year'] }}
+            {{ $movie['year'] }}
         </p>
 
         <p>
             <strong>Category:</strong>
-            {{ $book['category'] }}
+            {{ $movie['genre'] }}
         </p>
 
-        @if ($book['category'] === 'Fantasy')
-            <div class="alert alert-primary">
-                This is one of our featured fantasy books.
-            </div>
-        @else
-            <div class="alert alert-secondary">
-                This book belongs to the {{ $book['category'] }} category.
-            </div>
-        @endif
-
-        <a href="{{ route('books.index') }}"
-           class="btn btn-primary">
-            Back to Books
+        <a href="{{ route('movies.index') }}" class="btn btn-secondary">
+            Back to Movies
         </a>
 
     </div>

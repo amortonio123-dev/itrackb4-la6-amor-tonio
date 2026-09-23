@@ -12,49 +12,49 @@ class MovieController extends Controller
             1 => [
                 'id' => 1,
                 'title' => 'Inception',
-                'director' => 'Christopher Nolan',
-                'genre' => 'Sci-Fi',
-                'year' => 2010
+                'author' => 'Christopher Nolan',
+                'year' => 2010,
+                'genre' => 'Sci-Fi'
             ],
 
             2 => [
                 'id' => 2,
                 'title' => 'The Dark Knight',
-                'director' => 'Christopher Nolan',
-                'genre' => 'Action',
-                'year' => 2008
+                'author' => 'Christopher Nolan',
+                'year' => 2008,
+                'genre' => 'Action'
             ],
 
             3 => [
                 'id' => 3,
                 'title' => 'Interstellar',
-                'director' => 'Christopher Nolan',
-                'genre' => 'Sci-Fi',
-                'year' => 2014
+                'author' => 'Christopher Nolan',
+                'year' => 2014,
+                'genre' => 'Sci-Fi'
             ],
 
             4 => [
                 'id' => 4,
                 'title' => 'The Matrix',
-                'director' => 'The Wachowskis',
-                'genre' => 'Sci-Fi',
-                'year' => 1999
+                'author' => 'The Wachowskis',
+                'year' => 1999,
+                'genre' => 'Sci-Fi'
             ],
 
             5 => [
                 'id' => 5,
                 'title' => 'The Godfather',
-                'director' => 'Francis Ford Coppola',
-                'genre' => 'Crime',
-                'year' => 1972
+                'author' => 'Francis Ford Coppola',
+                'year' => 1972,
+                'genre' => 'Crime'
             ],
 
             6 => [
                 'id' => 6,
                 'title' => 'Avengers: Endgame',
-                'director' => 'Anthony Russo and Joe Russo',
-                'genre' => 'Action',
-                'year' => 2019
+                'author' => 'Anthony Russo and Joe Russo',
+                'year' => 2019,
+                'genre' => 'Action'
             ],
         ];
     }
@@ -82,7 +82,7 @@ class MovieController extends Controller
 
             if ($author !== '') {
                 $authorMatch = strcasecmp(
-                    $movie['director'],
+                    $movie['author'],
                     $author
                 ) === 0;
             }
@@ -96,28 +96,6 @@ class MovieController extends Controller
             'movies' => $filteredMovies,
             'genre' => $genre,
             'author' => $author
-        ]);
-    }
-
-    public function show($id)
-    {
-        $movies = $this->getMovies();
-
-        if (!isset($movies[$id])) {
-            abort(404);
-        }
-
-        return view('movies.show', [
-            'movie' => $movies[$id]
-        ]);
-    }
-
-    public function featured()
-    {
-        $movies = $this->getMovies();
-
-        return view('movies.featured', [
-            'movie' => $movies[3]
         ]);
     }
 }

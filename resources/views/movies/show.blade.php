@@ -1,23 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Movie Details</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Movie Details</h1>
+@section('title', $movie['title'])
 
-    <p><strong>Full Name:</strong> Aira Basco</p>
+@section('content')
 
-    <p><strong>ID:</strong> {{ $movie['id'] }}</p>
-    <p><strong>Title:</strong> {{ $movie['title'] }}</p>
-    <p><strong>Director:</strong> {{ $movie['director'] }}</p>
-    <p><strong>Genre:</strong> {{ $movie['genre'] }}</p>
-    <p><strong>Year:</strong> {{ $movie['year'] }}</p>
+<h2>Movie Details</h2>
 
-    <br>
+<div class="card mt-3" style="max-width: 500px;">
 
-    <a href="/movies">← Back to Movies</a>
+    <div class="card-body">
 
-</body>
-</html>
+        <h4 class="card-title">
+            {{ $movie['title'] }}
+        </h4>
+
+        <p>
+            <strong>Full Name:</strong> Aira Basco
+        </p>
+
+        <p>
+            <strong>ID:</strong> {{ $movie['id'] }}
+        </p>
+
+        <p>
+            <strong>Title:</strong> {{ $movie['title'] }}
+        </p>
+
+        <p>
+            <strong>Author:</strong> {{ $movie['author'] }}
+        </p>
+
+        <p>
+            <strong>Genre:</strong> {{ $movie['genre'] }}
+        </p>
+
+        <p>
+            <strong>Year:</strong> {{ $movie['year'] }}
+        </p>
+
+        <a href="{{ route('movies.index') }}" class="btn btn-secondary">
+            Back to Movies
+        </a>
+
+    </div>
+
+</div>
+
+@endsection
