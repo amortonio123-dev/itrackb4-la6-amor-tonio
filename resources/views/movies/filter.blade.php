@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <h1>Movie Filter</h1>
+    h1>Movie Filter</h1>
 
     <p><strong>Full Name:</strong> Aira Basco</p>
 

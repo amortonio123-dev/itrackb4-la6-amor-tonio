@@ -4,54 +4,118 @@
 
 @section('content')
 
-<div class="card mb-4">
-    <div class="card-body">
-        <h2>Movie List</h2>
-        <p>Prepared by: Aira Basco</p>
-    </div>
-</div>
+<h2>Movie List</h2>
 
-<table class="table table-striped table-bordered">
+<p>
+    @if($genre !== '' && $author !== '')
+        Showing movies with
+        Genre: <strong>{{ $genre }}</strong>
+        and
+        Author: <strong>{{ $author }}</strong>
+
+    @elseif($genre !== '')
+        Showing movies with
+        Genre: <strong>{{ $genre }}</strong>
+
+    @elseif($author !== '')
+        Showing movies with
+        Author: <strong>{{ $author }}</strong>
+
+    @else
+        Showing all movies
+    @endif
+</p>
+
+{{-- Genre Filter --}}
+<p>
+    <strong>Genre:</strong>
+
+    <a href="{{ route('movies.index', ['genre' => 'Sci-Fi', 'author' => $author]) }}">
+        Sci-Fi
+    </a>
+
+    |
+
+    <a href="{{ route('movies.index', ['genre' => 'Action', 'author' => $author]) }}">
+        Action
+    </a>
+
+    |
+
+    <a href="{{ route('movies.index', ['genre' => 'Crime', 'author' => $author]) }}">
+        Crime
+    </a>
+</p>
+
+{{-- Author Filter --}}
+<p>
+    <strong>Author:</strong>
+
+    <a href="{{ route('movies.index', ['author' => 'Christopher Nolan', 'genre' => $genre]) }}">
+        Christopher Nolan
+    </a>
+
+    |
+
+    <a href="{{ route('movies.index', ['author' => 'The Wachowskis', 'genre' => $genre]) }}">
+        The Wachowskis
+    </a>
+
+    |
+
+    <a href="{{ route('movies.index', ['author' => 'Francis Ford Coppola', 'genre' => $genre]) }}">
+        Francis Ford Coppola
+    </a>
+
+    |
+
+    <a href="{{ route('movies.index', ['author' => 'Anthony Russo and Joe Russo', 'genre' => $genre]) }}">
+        Anthony Russo and Joe Russo
+    </a>
+</p>
+
+{{-- Clear All --}}
+<p>
+    <a href="{{ route('movies.index') }}">
+        Clear All Filters
+    </a>
+</p>
+
+<table class="table table-bordered table-striped">
+
     <thead>
         <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Director</th>
             <th>Genre</th>
+            <th>Author</th>
             <th>Year</th>
             <th>Action</th>
         </tr>
     </thead>
 
     <tbody>
-        @forelse ($movies as $movie)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $movie['title'] }}</td>
-                <td>{{ $movie['director'] }}</td>
-                <td>{{ $movie['genre'] }}</td>
-                <td>
-                    {{ $movie['year'] }}
 
-                    @if ($movie['year'] >= 2010)
-                        <span class="badge bg-success">Modern</span>
-                    @endif
-                </td>
-                <td>
-                    <a href="{{ route('movies.show', $movie['id']) }}"
-                       class="btn btn-primary btn-sm">
-                        View
-                    </a>
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="6" class="text-center">
-                    No movies are available right now.
-                </td>
-            </tr>
-        @endforelse
+        @foreach($movies as $movie)
+
+        <tr>
+            <td>{{ $movie['id'] }}</td>
+            <td>{{ $movie['title'] }}</td>
+            <td>{{ $movie['genre'] }}</td>
+            <td>{{ $movie['author'] }}</td>
+            <td>{{ $movie['year'] }}</td>
+
+            <td>
+                <a href="{{ route('movies.show', ['id' => $movie['id']]) }}">
+                    View
+                </a>
+            </td>
+        </tr>
+
+        @endforeach
+
     </tbody>
+
 </table>
 
 @endsection

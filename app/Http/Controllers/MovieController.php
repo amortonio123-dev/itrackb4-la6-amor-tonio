@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class MovieController extends Controller
 {
     private function getMovies()
@@ -12,7 +14,7 @@ class MovieController extends Controller
                 'title' => 'Inception',
                 'director' => 'Christopher Nolan',
                 'genre' => 'Sci-Fi',
-                'year' => 2010,
+                'year' => 2010
             ],
 
             2 => [
@@ -20,7 +22,7 @@ class MovieController extends Controller
                 'title' => 'The Dark Knight',
                 'director' => 'Christopher Nolan',
                 'genre' => 'Action',
-                'year' => 2008,
+                'year' => 2008
             ],
 
             3 => [
@@ -28,7 +30,7 @@ class MovieController extends Controller
                 'title' => 'Interstellar',
                 'director' => 'Christopher Nolan',
                 'genre' => 'Sci-Fi',
-                'year' => 2014,
+                'year' => 2014
             ],
 
             4 => [
@@ -36,7 +38,7 @@ class MovieController extends Controller
                 'title' => 'The Matrix',
                 'director' => 'The Wachowskis',
                 'genre' => 'Sci-Fi',
-                'year' => 1999,
+                'year' => 1999
             ],
 
             5 => [
@@ -44,7 +46,7 @@ class MovieController extends Controller
                 'title' => 'The Godfather',
                 'director' => 'Francis Ford Coppola',
                 'genre' => 'Crime',
-                'year' => 1972,
+                'year' => 1972
             ],
 
             6 => [
@@ -52,28 +54,49 @@ class MovieController extends Controller
                 'title' => 'Avengers: Endgame',
                 'director' => 'Anthony Russo and Joe Russo',
                 'genre' => 'Action',
-                'year' => 2019,
+                'year' => 2019
             ],
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $genre = $request->query('genre', '');
+        $author = $request->query('author', '');
+
         $movies = $this->getMovies();
 
+        $filteredMovies = [];
+
+        foreach ($movies as $movie) {
+
+            $genreMatch = true;
+            $authorMatch = true;
+
+            if ($genre !== '') {
+                $genreMatch = strcasecmp(
+                    $movie['genre'],
+                    $genre
+                ) === 0;
+            }
+
+            if ($author !== '') {
+                $authorMatch = strcasecmp(
+                    $movie['director'],
+                    $author
+                ) === 0;
+            }
+
+            if ($genreMatch && $authorMatch) {
+                $filteredMovies[] = $movie;
+            }
+        }
+
         return view('movies.index', [
-            'movies' => $movies
+            'movies' => $filteredMovies,
+            'genre' => $genre,
+            'author' => $author
         ]);
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store()
-    {
-        //
     }
 
     public function show($id)
@@ -84,61 +107,17 @@ class MovieController extends Controller
             abort(404);
         }
 
-        $movie = $movies[$id];
-
         return view('movies.show', [
-            'movie' => $movie
+            'movie' => $movies[$id]
         ]);
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update($id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 
     public function featured()
     {
         $movies = $this->getMovies();
 
-        $movie = $movies[3];
-
-        return view('movies.show', [
-            'movie' => $movie
-        ]);
-    }
-
-    public function filter($genre = null)
-    {
-        $movies = $this->getMovies();
-
-        if ($genre === null) {
-            $filteredMovies = $movies;
-            $message = 'All movies are shown.';
-        } else {
-            $filteredMovies = [];
-
-            foreach ($movies as $movie) {
-                if (strcasecmp($movie['genre'], $genre) === 0) {
-                    $filteredMovies[] = $movie;
-                }
-            }
-
-            $message = 'Showing movies with genre: ' . $genre;
-        }
-
-        return view('movies.filter', [
-            'movies' => $filteredMovies,
-            'message' => $message
+        return view('movies.featured', [
+            'movie' => $movies[3]
         ]);
     }
 }
